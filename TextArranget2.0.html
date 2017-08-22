@@ -62,9 +62,31 @@ function canvasApp() {
 	formElement = document.getElementById("fontStyle");
 	formElement.addEventListener("change", fontStyleChanged, false);
 	
+	formElement = document.getElementById("textAlpha");
+	formElement.addEventListener("change", textAlphaChanged, false);
+
+	formElement = document.getElementById("shadowX");
+	formElement.addEventListener("change", shadowXChanged, false);
+
+	formElement = document.getElementById("shadowY");
+	formElement.addEventListener("change", shadowYChanged, false);
+
+	formElement = document.getElementById("shadowBlur");
+	formElement.addEventListener("change", shadowBlurChanged, false);
+
+	formElement = document.getElementById("shadowColor");
+	formElement.addEventListener("change", shadowColorChanged, false);
+
 	drawScreen();
 	
     function drawScreen() {
+		context.globalAlpha = 1;
+		
+		context.shadowColor = "#707070";
+		context.shadowOffsetX = 0;
+		context.shadowOffsetY = 0;
+		context.shadowBlur = 0;
+		
 		// 背景
 		context.fillStyle = "#ffffaa";
 		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
@@ -76,6 +98,13 @@ function canvasApp() {
 //		context.strokeRect(5, 5, 500 - 10, 300 - 10);
 		
 		// 文字
+		context.globalAlpha = textAlpha;
+		
+		context.shadowColor = shadowColor;
+		context.shadowOffsetX = shadowX;
+		context.shadowOffsetY = shadowY;
+		context.shadowBlur = shadowBlur;
+		
 		context.textBaseline = textBaseline;
 		context.textAlign = textAlign;
 		context.font = fontWeight + " " + fontStyle + " " + fontSize + "px " + fontFace;
@@ -156,6 +185,36 @@ function canvasApp() {
     	fontStyle = target.value;
     	drawScreen();
     }
+    
+    function textAlphaChanged(e) {
+    	var target = e.target;
+    	textAlpha = (target.value);
+    	drawScreen();
+    }
+
+    function shadowXChanged(e) {
+    	var target = e.target;
+    	shadowX = (target.value);
+    	drawScreen();
+    }
+
+    function shadowYChanged(e) {
+    	var target = e.target;
+    	shadowY = (target.value);
+    	drawScreen();
+    }
+
+    function shadowBlurChanged(e) {
+    	var target = e.target;
+    	shadowBlur = (target.value);
+    	drawScreen();
+    }
+
+    function shadowColorChanged(e) {
+    	var target = e.target;
+    	shadowColor = (target.value);
+    	drawScreen();
+    }
 }
 
 </script>
@@ -188,6 +247,19 @@ Your browser does not support HTML5 Canvas.
 	<br>
 	Text Size: <input type="range" id="textSize" min="0" max="200" step="1" value="50" />
 	<br>
+	Alpha: <input type="range" id="textAlpha" min="0.0" max="1.0" step="0.01" value="1.0" />
+	<br>
+
+	ShadowX: <input type="range" id="shadowX" min="-100" max="100" step="1" value="1" />
+	<br>
+	ShadowY: <input type="range" id="shadowY" min="-100" max="100" step="1" value="1" />
+	<br>
+	ShadowBlur: <input type="range" id="shadowBlur" min="1" max="100" step="1" value="1" />
+	<br>
+	ShadowColor: <input class="color" id="shadowColor" min="0.0" max="1.0" step="0.01" value="707070" />
+	<br>
+
+
 	Text Color: <input class="color" id="textFillColor" value="FF0000" />
 	<br>
 	Font Weight:

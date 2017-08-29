@@ -1,0 +1,71 @@
+﻿<!doctype html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ch4BaseFile - Template For Chapter 4 Examples</title>
+<script src="modernizr-1.6.min.js"></script>
+<script type="text/javascript">
+window.addEventListener('load', eventWindowLoaded, false);
+
+var spaceShip = new Image();
+spaceShip.addEventListener('load', eventShipLoaded, false);
+spaceShip.src = "ship1.png";
+function eventShipLoaded() {
+	drawScreen();
+}
+
+
+function eventWindowLoaded() {
+	canvasApp();
+}
+
+function eventAssetsLoaded() {
+	canvasApp();
+}
+
+function canvasSupport() {
+	return Modernizr.canvas;
+}
+
+function canvasApp() {
+	
+	if (!canvasSupport()) {
+		return;
+	} else {
+		var theCanvas = document.getElementById("canvas");
+		var context = theCanvas.getContext("2d");	
+	}
+
+	drawScreen();
+	
+    function drawScreen() {
+		// 背景
+		context.fillStyle = "#aaaaaa";
+		context.fillRect(0, 0, 200, 200);
+		context.fillStyle = "#000000";
+		context.font = "20px _sans";
+		context.textBaseline = 'top';
+		context.fillText("Canvas!", 0, 0);
+		
+		placeShip(context, spaceShip, 10, 10);
+		placeShip(context, spaceShip, 10, 10, 32, 32);
+		context.drawImage(spaceShip, 10,10, 64, 64, 100, 100, 64, 64);
+    }
+    
+    function placeShip(xtx, obj, posX, posY, width, height) {
+    	if (width && height) {
+    		context.drawImage(obj, posX, posY, width, height);
+    	} else {
+    		context.drawImage(obj, posX, posY);
+    	}
+    }
+}
+</script>
+</head>
+<body>
+<div style="position:absolute; top:50px; left:50px;">
+<canvas id="canvas" width="500" height="300">
+Your browser does not support HTML5 Canvas.
+</canvas>
+</div>
+</body>
+</html>
